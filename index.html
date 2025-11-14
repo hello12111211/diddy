@@ -1,0 +1,88 @@
+a<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Diddy Blud Calculator</title>
+  <style>
+    body{margin:0;height:100vh;display:flex;justify-content:center;align-items:center;background:#0f1724;font-family:Arial;color:#fff}
+    .calc{width:320px;background:#111827;padding:20px;border-radius:16px;box-shadow:0 0 20px #000}
+    #display{background:#1f2937;padding:15px;border-radius:10px;font-size:28px;text-align:right;margin-bottom:12px}
+    .keys{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    button{padding:14px;border-radius:10px;border:0;background:#374151;color:#fff;font-size:18px;cursor:pointer}
+    button.op{background:#7c3aed}
+    #einstein{position:absolute;bottom:20px;right:20px;width:130px;border-radius:10px;opacity:0;pointer-events:none}
+    @keyframes fade {0%{opacity:0;}50%{opacity:1;}100%{opacity:0;}}
+  </style>
+</head>
+<body>
+
+<div class="calc">
+  <div id="display">0</div>
+
+  <div class="keys">
+    <button data-val="7">7</button>
+    <button data-val="8">8</button>
+    <button data-val="9">9</button>
+    <button class="op" data-val="/">÷</button>
+
+    <button data-val="4">4</button>
+    <button data-val="5">5</button>
+    <button data-val="6">6</button>
+    <button class="op" data-val="*">×</button>
+
+    <button data-val="1">1</button>
+    <button data-val="2">2</button>
+    <button data-val="3">3</button>
+    <button class="op" data-val="-">−</button>
+
+    <button data-val="0">0</button>
+    <button data-val=".">.</button>
+    <button id="equals" class="op">=</button>
+    <button class="op" data-val="+">+</button>
+
+    <button id="clear">C</button>
+    <button id="bksp">⌫</button>
+    <button id="neg">±</button>
+    <button id="percent">%</button>
+  </div>
+</div>
+
+<img id="einstein" src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Albert_Einstein_Head.jpg" />
+
+<script>
+  const display = document.getElementById('display');
+  const keys = document.querySelectorAll('button[data-val]');
+  const einstein = document.getElementById('einstein');
+  let expr = '';
+
+  function update(){ display.textContent = expr || '0'; }
+
+  keys.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      expr += btn.dataset.val;
+      update();
+    });
+  });
+
+  document.getElementById('clear').onclick = ()=>{ expr=''; update(); }
+  document.getElementById('bksp').onclick = ()=>{ expr = expr.slice(0,-1); update(); }
+  document.getElementById('neg').onclick = ()=>{
+    if(!expr) return;
+    expr = String(-Number(expr)); update();
+  }
+  document.getElementById('percent').onclick = ()=>{
+    expr = String(Number(expr)/100); update();
+  }
+
+  document.getElementById('equals').onclick = ()=>{
+    display.textContent = 'diddy blud';
+    expr = '';
+    einstein.style.animation = 'none';
+    void einstein.offsetWidth;
+    einstein.style.animation = 'fade 2.2s';
+  }
+</script>
+
+</body>
+</html>
